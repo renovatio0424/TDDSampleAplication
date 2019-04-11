@@ -1,10 +1,13 @@
 package com.sample.renovatio.tddsampleaplication
 
+import com.nhaarman.mockito_kotlin.then
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
+import org.mockito.Mockito
+import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 
@@ -23,7 +26,7 @@ class LogInPresenterTest {
         MockitoAnnotations.initMocks(this)
         logInPresenter = LogInPresenter(logInActivity, logInRepository)
     }
-
+    //bdd
     @Test
     fun `이메일 양식이 맞지 않는 경우`() {
         //given
@@ -49,16 +52,24 @@ class LogInPresenterTest {
         //given
         val email = "reno.kim@kinemaster.com"
         val password = 123456789
+
         //when
+        `when`(logInActivity.showSuccessMessage()).then { Assert.assertTrue(true) }
+
+        //then
         logInPresenter.login(email, password)
-//        //then
-//        Assert.
     }
 
     @Test
     fun `로그인에 실패했을 경우`() {
         //given
+        val email = "reno.kim@kinemaster.com"
+        val password = 1234567893
+
         //when
+        `when`(logInActivity.showErrorMessage(ErrorType.FAILED_LOGIN)).then { Assert.assertTrue(true) }
+
         //then
+        logInPresenter.login(email, password)
     }
 }
